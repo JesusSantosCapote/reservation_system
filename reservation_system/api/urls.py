@@ -1,9 +1,12 @@
 from django.urls import path
-from .views import ReservationListView, ReservationCreateView, ClientListView, ClientCreateView, ClientUpdateView, ClientRetrieveView, ClientDestroyView
+from .views import ReservationListView, ReservationCreateView, ReservationUpdateView, ReservationDestroyView, ReservationRetrieveView, ClientListView, ClientCreateView, ClientUpdateView, ClientRetrieveView, ClientDestroyView
 
 urlpatterns = [
     path('reservations/', ReservationListView.as_view(), name='get_reservations'),
     path('reservations/create/', ReservationCreateView.as_view(), name='create_reservation'),
+    path('reservations/<int:pk>/update', ReservationUpdateView.as_view(), name='update_reservation'),
+    path('reservations/<int:pk>/delete', ReservationDestroyView.as_view(), name='delete_reservation'),
+    path('reservations/<int:pk>/', ReservationRetrieveView.as_view(), name='update_reservation'),
     path('clients/', ClientListView.as_view(), name= 'get_clients'),
     path('clients/create/', ClientCreateView.as_view(), name = 'create_client'),
     path('clients/<int:pk>/update', ClientUpdateView.as_view(), name = 'update_client'),
