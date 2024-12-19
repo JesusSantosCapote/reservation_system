@@ -9,7 +9,7 @@
 2. Open a terminal in the directory where the `docker-compose.yaml` file is located.
 3. Execute the command: `docker compose up`.
 4. Wait for the images to be created and the containers to be mounted.
-5. Open your web browser and go to: `http://0.0.0.0:8000`.
+5. Open your web browser and go to: `http://localhost:8000`.
 6. Navigate through the routes displayed on the screen. Done!
 
 # Project Description
