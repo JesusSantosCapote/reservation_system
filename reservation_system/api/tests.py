@@ -1,4 +1,5 @@
-from rest_framework import status, reverse
+from rest_framework import status
+from django.urls import reverse
 from rest_framework.test import APITestCase
 from .models import Client, Reservation
 from .serializer import ClientSerializer, ReservationSerializer
@@ -12,8 +13,8 @@ class ReservationViewsTests(APITestCase):
         self.client_obj = Client.objects.create(**self.client_data)
         
         self.reservation_data = {
-            'client': self.client_obj.id,
-            'date': '2024-12-19',
+            'client': self.client_obj,
+            'reservation_date': '2024-12-19',
             'status': 'PENDING'
         }
         self.reservation = Reservation.objects.create(**self.reservation_data)
@@ -28,7 +29,7 @@ class ReservationViewsTests(APITestCase):
         url = reverse('create-reservation')
         new_reservation = {
             'client': self.client_obj.id,
-            'date': '2024-12-20',
+            'reservation_date': '2024-12-20',
             'status': 'PENDING'
         }
         response = self.client.post(url, new_reservation, format='json')
@@ -45,7 +46,7 @@ class ReservationViewsTests(APITestCase):
         url = reverse('update-reservation', args=[self.reservation.id])
         updated_data = {
             'client': self.client_obj.id,
-            'date': '2024-12-20',
+            'reservation_date': '2024-12-20',
             'status': 'CANCELED'
         }
         response = self.client.put(url, updated_data, format='json')
