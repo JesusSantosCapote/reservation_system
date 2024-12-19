@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  db:
+    build: ./db/.
+    container_name: mysql_db
+    restart: always
+    environment: 
+      - MYSQL_ROOT_PASSWORD=pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db/data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysql", "-h", "localhost", "-u", "root", "-ppass", "-e", "SELECT 1"]
+      timeout: 20s
+      retries: 10
+
+  backend:
+    build: .
+    restart: always
+    container_name: api
+    command: sh -c "python3 manage.py makemigrations &&
+                    python3 manage.py migrate &&
+                    python3 manage.py create_super_user -u admin -p pass -e admin@domain.com &&
+                    python3 manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./reservation-system:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=reservations
+      - DB_USER=root
+      - DB_PASS=pass
+      - DB_PORT=3306
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+  rabbitmq: 
+    image: "rabbitmq:3-management" 
+    ports: 
+      - "15672:15672"
+      - "5672:5672"
+
+  celery:
+    build: .
+    restart: always
+    command: celery -A reservation_system worker -l info
+    volumes:
+      - ./reservation-system:/app
+    environment:
+      - DB_HOST=db
+      - DB_NAME=reservations
+      - DB_USER=root
+      - DB_PASS=pass
+      - DB_PORT=3306
+    depends_on:
+      - db 
+      - rabbitmq
+      - backend
+
+volumes:
+  db_data:
