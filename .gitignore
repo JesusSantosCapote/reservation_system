@@ -1,0 +1,33 @@
+# Ignorar el entorno virtual
+venv/
+# También puedes usar:
+# /venv
+
+# Ignorar archivos de configuración específicos del sistema operativo
+*.DS_Store
+
+# Ignorar archivos de compilación de Python
+*.pyc
+__pycache__/
+
+# Ignorar archivos de configuración de IDEs/editors
+.vscode/
+.idea/
+
+# Ignorar archivos de logs
+*.log
+
+# Ignorar configuraciones de pytest
+.pytest_cache/
+
+# Ignorar carpetas de cobertura de pruebas
+htmlcov/
+.coverage
+coverage/
+
+# Ignorar bases de datos locales
+db.sqlite3
+
+# Ignorar entornos virtuales creados con pipenv
+Pipfile
+Pipfile.lock
