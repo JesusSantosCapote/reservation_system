@@ -31,3 +31,6 @@ db.sqlite3
 # Ignorar entornos virtuales creados con pipenv
 Pipfile
 Pipfile.lock
+
+/db/data
+

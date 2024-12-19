@@ -25,7 +25,7 @@ services:
                     python3 manage.py create_super_user -u admin -p pass -e admin@domain.com &&
                     python3 manage.py runserver 0.0.0.0:8000"
     volumes:
-      - ./reservation-system:/app
+      - ./reservation_system:/app
     ports:
       - "8000:8000"
     environment:
@@ -50,7 +50,7 @@ services:
     restart: always
     command: celery -A reservation_system worker -l info
     volumes:
-      - ./reservation-system:/app
+      - ./reservation_system:/app
     environment:
       - DB_HOST=db
       - DB_NAME=reservations

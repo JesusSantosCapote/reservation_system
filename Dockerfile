@@ -8,6 +8,6 @@ RUN pip install -r /requirements.txt
 
 RUN mkdir /app 
 
-COPY ./reservation-system /app
+COPY ./reservation_system /app
 
 WORKDIR /app
